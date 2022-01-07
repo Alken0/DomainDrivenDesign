@@ -1,8 +1,10 @@
 package com.bartlin.infrastructure.db
 
+import com.bartlin.infrastructure.db.tables.DrinkTable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils.create
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -11,12 +13,13 @@ import org.jetbrains.exposed.sql.transactions.transaction
 object DatabaseFactory {
 	fun init() {
 		Database.connect(hikari())
-
+		
 		transaction {
 			addLogger(StdOutSqlLogger)
+			create(DrinkTable)
 		}
 	}
-
+	
 	private fun hikari(): HikariDataSource {
 		val config = HikariConfig()
 		config.driverClassName = "org.h2.Driver"

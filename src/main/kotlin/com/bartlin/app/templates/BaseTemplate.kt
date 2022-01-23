@@ -1,6 +1,7 @@
 package com.bartlin.app.templates
 
 import com.bartlin.app.CREATE_DRINK
+import com.bartlin.app.GET_DRINKS_MENU
 import com.bartlin.app.INDEX
 import io.ktor.html.*
 import kotlinx.html.*
@@ -25,6 +26,8 @@ class BaseTemplate : Template<HTML> {
 				a(href = INDEX) { +"Home" }
 				+" | "
 				a(href = CREATE_DRINK) { +"Create Drink" }
+				+" | "
+				a(href = GET_DRINKS_MENU) { +"Drinks Menu" }
 			}
 		}
 	}

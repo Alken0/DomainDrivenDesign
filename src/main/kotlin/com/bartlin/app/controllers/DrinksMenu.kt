@@ -1,14 +1,12 @@
 package com.bartlin.app.controllers
 
+import com.bartlin.app.UPDATE_DRINK
 import com.bartlin.app.templates.BaseTemplate
 import com.bartlin.domain.services.DrinkService
 import io.ktor.application.*
 import io.ktor.html.*
 import io.ktor.routing.*
-import kotlinx.html.table
-import kotlinx.html.td
-import kotlinx.html.th
-import kotlinx.html.tr
+import kotlinx.html.*
 
 fun Route.getDrinksMenu(service: DrinkService) {
 	get {
@@ -23,6 +21,7 @@ fun Route.getDrinksMenu(service: DrinkService) {
 						th { +"Name" }
 						th { +"Price" }
 						th { +"Description" }
+						th { +"" }
 					}
 					for (item in service.findAll()) {
 						tr {
@@ -30,6 +29,11 @@ fun Route.getDrinksMenu(service: DrinkService) {
 							td { +item.name }
 							td { +"${item.price / 100.0}€" }
 							td { +item.description }
+							td {
+								a(href = UPDATE_DRINK.replace("{id}", "${item.id}")) {
+									+"edit"
+								}
+							}
 						}
 					}
 				}

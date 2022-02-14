@@ -1,9 +1,6 @@
 package com.bartlin.app.templates
 
-import com.bartlin.app.CREATE_DRINK
-import com.bartlin.app.CREATE_ORDER
-import com.bartlin.app.INDEX
-import com.bartlin.app.MENU
+import com.bartlin.app.*
 import io.ktor.html.*
 import kotlinx.html.*
 
@@ -40,6 +37,9 @@ class BaseTemplate : Template<HTML> {
 						}
 						li("nav-item") {
 							a(href = CREATE_ORDER, classes = "nav-link") { +"Create Order" }
+						}
+						li("nav-item") {
+							a(href = TABLES, classes = "nav-link") { +"Bill" }
 						}
 					}
 				}

@@ -1,6 +1,6 @@
 package com.bartlin.app.controllers
 
-import com.bartlin.app.ORDER
+import com.bartlin.app.CREATE_ORDER
 import com.bartlin.app.templates.BaseTemplate
 import com.bartlin.domain.dto.CreateOrderInput
 import com.bartlin.domain.services.DrinkService
@@ -14,7 +14,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.html.*
 
-fun Route.order(tables: TableService, drinks: DrinkService, orders: OrderService) {
+fun Route.createOrder(tables: TableService, drinks: DrinkService, orders: OrderService) {
 	get {
 		call.respondHtmlTemplate(BaseTemplate()) {
 			header {
@@ -22,33 +22,42 @@ fun Route.order(tables: TableService, drinks: DrinkService, orders: OrderService
 			}
 			content {
 				form(method = FormMethod.post) {
-					label {
-						+"Table"
-						select {
-							name = "table"
-							for (table in tables.findAll()) {
-								option {
-									value = "${table.id}"
-									+table.name
+					div("row") {
+						label("form-label") {
+							+"Table"
+							select("form-select") {
+								name = "table"
+								for (table in tables.findAll()) {
+									option {
+										value = "${table.id}"
+										+table.name
+									}
 								}
 							}
 						}
 					}
-					br
-					label {
-						+"Drink"
-						select {
-							name = "drink"
-							for (drink in drinks.findAll()) {
-								option {
-									value = "${drink.id}"
-									+drink.name
+
+					div("row") {
+						label("form-label") {
+							+"Drink"
+							select("form-select") {
+								name = "drink"
+								for (drink in drinks.findAll()) {
+									option {
+										value = "${drink.id}"
+										+drink.name
+									}
 								}
 							}
 						}
 					}
-					br
-					submitInput()
+
+					div("row mx-auto") {
+						button(classes = "btn btn-primary") {
+							type = ButtonType.submit
+							+"Submit"
+						}
+					}
 				}
 			}
 		}
@@ -57,7 +66,7 @@ fun Route.order(tables: TableService, drinks: DrinkService, orders: OrderService
 	post {
 		val data = call.receiveParameters().toCreateOrder()
 		orders.create(data)
-		call.respondRedirect(ORDER)
+		call.respondRedirect(CREATE_ORDER)
 	}
 }
 

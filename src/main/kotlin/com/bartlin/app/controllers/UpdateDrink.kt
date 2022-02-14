@@ -1,8 +1,7 @@
 package com.bartlin.app.controllers
 
-import com.bartlin.app.CREATE_DRINK
+import com.bartlin.app.MENU
 import com.bartlin.app.templates.BaseTemplate
-import com.bartlin.domain.dto.CreateDrinkInput
 import com.bartlin.domain.dto.UpdateDrinkInput
 import com.bartlin.domain.services.DrinkService
 import io.ktor.application.*
@@ -23,47 +22,59 @@ fun Route.updateDrink(service: DrinkService) {
 			}
 			content {
 				form(method = FormMethod.post) {
-					label {
-						+"Name"
-						textInput(name = "name") {
-							+" current: ${original.name}"
+					div("row") {
+						label("form-label") {
+							+"Name"
+							textInput(name = "name", classes = "form-control") {
+								placeholder = original.name
+							}
 						}
-						br
 					}
-					label {
-						+"Price (in cents)"
-						numberInput(name = "price") {
-							+" current: ${original.price} cents"
+
+					div("row") {
+						label("form-label") {
+							+"Price (in cents)"
+							numberInput(name = "price", classes = "form-control") {
+								placeholder = "${original.price} cents"
+							}
 						}
-						br
 					}
-					label {
-						+"Description"
-						textInput(name = "description") {
-							+" current: ${original.description}"
+
+					div("row") {
+						label("form-label") {
+							+"Description"
+							textArea(classes = "form-control") {
+								name = "description"
+								placeholder = original.description
+							}
 						}
-						br
 					}
-					submitInput()
+
+					div("row mx-auto") {
+						button(classes = "btn btn-primary") {
+							type = ButtonType.submit
+							+"Submit"
+						}
+					}
 				}
 			}
 		}
 	}
-	
+
 	post {
 		val id = call.parameters["id"]!!.toInt()
 		val data = call.receiveParameters().toUpdateDrink(id)
 		service.update(data)
-		call.respondRedirect(CREATE_DRINK)
+		call.respondRedirect(MENU)
 	}
 }
 
 private fun Parameters.toUpdateDrink(id: Int): UpdateDrinkInput {
 	return UpdateDrinkInput(
 		id = id,
-		name = this["name"],
-		price = this["price"]?.toInt(),
-		description = this["description"]
+		name = this["name"]?.ifBlank { null },
+		price = this["price"]?.ifBlank { null }?.toInt(),
+		description = this["description"]?.ifBlank { null }
 	)
 }
 

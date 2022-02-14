@@ -20,27 +20,40 @@ fun Route.createDrink(service: DrinkService) {
 			}
 			content {
 				form(method = FormMethod.post) {
-					label {
-						+"Name"
-						textInput(name = "name")
-						br
+					div("row") {
+						label("form-label") {
+							+"Name"
+							textInput(name = "name", classes = "form-control") { required = true }
+						}
 					}
-					label {
-						+"Price (in cents)"
-						numberInput(name = "price")
-						br
+
+					div("row") {
+						label("form-label") {
+							+"Price (in cents)"
+							numberInput(name = "price", classes = "form-control") { required = true }
+						}
 					}
-					label {
-						+"Description"
-						textInput(name = "description")
-						br
+
+					div("row") {
+						label("form-label") {
+							+"Description"
+							textArea(classes = "form-control") {
+								name = "description"
+							}
+						}
 					}
-					submitInput()
+
+					div("row mx-auto") {
+						button(classes = "btn btn-primary") {
+							type = ButtonType.submit
+							+"Submit"
+						}
+					}
 				}
 			}
 		}
 	}
-	
+
 	post {
 		val data = call.receiveParameters().toCreateDrinkInput()
 		service.create(data)

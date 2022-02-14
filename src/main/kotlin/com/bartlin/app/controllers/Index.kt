@@ -10,11 +10,11 @@ fun Route.index() {
 	get {
 		call.respondHtmlTemplate(BaseTemplate()) {
 			header {
-				+"BARTLIN - Hipster-Cocktailbar"
+				+"BARTLIN a Hipster Cocktailbar"
 			}
 			content {
 				div {
-					+"Please use the footer for navigation!"
+					+"Please use the header for navigation!"
 				}
 			}
 		}

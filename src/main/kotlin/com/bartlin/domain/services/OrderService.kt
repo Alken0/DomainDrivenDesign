@@ -22,5 +22,9 @@ class OrderService(
 		val table = tables.findById(id) ?: throw Exception("table not found")
 		return orders.findDrinksByTable(table).map { DrinkSummaryOutput(it) }
 	}
-	
+
+	fun clearTable(id: Int) {
+		val table = tables.findById(id) ?: throw Exception("table not found")
+		orders.deleteByTable(table)
+	}
 }

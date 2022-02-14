@@ -1,9 +1,11 @@
 package com.bartlin.app.controllers
 
+import com.bartlin.app.INDEX
 import com.bartlin.app.templates.BaseTemplate
 import com.bartlin.domain.services.OrderService
 import io.ktor.application.*
 import io.ktor.html.*
+import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.html.*
 
@@ -39,7 +41,21 @@ fun Route.bill(service: OrderService) {
 						}
 					}
 				}
+				form(method = FormMethod.post) {
+					div("row mx-auto") {
+						button(classes = "btn btn-primary") {
+							type = ButtonType.submit
+							+"Clear"
+						}
+					}
+				}
 			}
 		}
+	}
+
+	post {
+		val tableId = call.parameters["id"]!!.toInt()
+		service.clearTable(tableId)
+		call.respondRedirect(INDEX)
 	}
 }

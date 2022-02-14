@@ -7,6 +7,7 @@ import com.bartlin.infrastructure.db.tables.DrinkTable
 import com.bartlin.infrastructure.db.tables.OrderTable
 import com.bartlin.infrastructure.db.tables.toDrink
 import org.jetbrains.exposed.sql.JoinType
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -25,6 +26,12 @@ class OrderRepositoryImpl : OrderRepository {
 		return transaction {
 			DrinkTable.join(OrderTable, JoinType.LEFT, onColumn = DrinkTable.id, otherColumn = OrderTable.drink)
 				.select { OrderTable.table.eq(table.id) }.map { it.toDrink() }
+		}
+	}
+
+	override fun deleteByTable(table: Table) {
+		transaction {
+			OrderTable.deleteWhere { OrderTable.table.eq(table.id) }
 		}
 	}
 }

@@ -13,7 +13,7 @@ import kotlinx.html.*
 fun Route.bill(service: OrderService) {
 	get {
 		val tableId = call.parameters["id"]!!.toId()
-		val drinks = service.findDrinksByTable(tableId)
+		val bill = service.getBillForTable(tableId)
 
 		call.respondHtmlTemplate(BaseTemplate()) {
 			header {
@@ -28,7 +28,7 @@ fun Route.bill(service: OrderService) {
 						}
 					}
 					tbody {
-						for (item in drinks) {
+						for (item in bill.orders()) {
 							tr {
 								td { +item.name.toString() }
 								td { +item.price.toEuro() }
@@ -38,7 +38,7 @@ fun Route.bill(service: OrderService) {
 					tfoot {
 						tr {
 							th { +"Total" }
-							th { +"${drinks.sumOf { it.price.toCents() } / 100f} €" }
+							th { +bill.total().toEuro() }
 						}
 					}
 				}

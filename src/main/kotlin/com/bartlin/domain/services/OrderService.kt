@@ -1,7 +1,7 @@
 package com.bartlin.domain.services
 
+import com.bartlin.domain.dto.BillOutput
 import com.bartlin.domain.dto.CreateOrderInput
-import com.bartlin.domain.dto.DrinkSummaryOutput
 import com.bartlin.domain.repositories.DrinkRepository
 import com.bartlin.domain.repositories.OrderRepository
 import com.bartlin.domain.repositories.TableRepository
@@ -19,9 +19,10 @@ class OrderService(
 		orders.create(table, drink)
 	}
 
-	fun findDrinksByTable(id: Id): List<DrinkSummaryOutput> {
+	fun getBillForTable(id: Id): BillOutput {
 		val table = tables.findById(id) ?: throw Exception("table not found")
-		return orders.findDrinksByTable(table).map { DrinkSummaryOutput(it) }
+		val drinks = orders.findDrinksByTable(table)
+		return BillOutput(drinks)
 	}
 
 	fun clearTable(id: Id) {

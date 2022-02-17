@@ -3,6 +3,7 @@ package com.bartlin.app.controllers
 import com.bartlin.app.INDEX
 import com.bartlin.app.templates.BaseTemplate
 import com.bartlin.domain.services.OrderService
+import com.bartlin.domain.vo.toId
 import io.ktor.application.*
 import io.ktor.html.*
 import io.ktor.response.*
@@ -11,7 +12,7 @@ import kotlinx.html.*
 
 fun Route.bill(service: OrderService) {
 	get {
-		val tableId = call.parameters["id"]!!.toInt()
+		val tableId = call.parameters["id"]!!.toId()
 		val drinks = service.findDrinksByTable(tableId)
 
 		call.respondHtmlTemplate(BaseTemplate()) {
@@ -29,15 +30,15 @@ fun Route.bill(service: OrderService) {
 					tbody {
 						for (item in drinks) {
 							tr {
-								td { +item.name }
-								td { +"${item.price / 100.0}€" }
+								td { +item.name.toString() }
+								td { +item.price.toEuro() }
 							}
 						}
 					}
 					tfoot {
 						tr {
 							th { +"Total" }
-							th { +"${drinks.sumOf { it.price } / 100.0} €" }
+							th { +"${drinks.sumOf { it.price.toCents() } / 100f} €" }
 						}
 					}
 				}
@@ -54,7 +55,7 @@ fun Route.bill(service: OrderService) {
 	}
 
 	post {
-		val tableId = call.parameters["id"]!!.toInt()
+		val tableId = call.parameters["id"]!!.toId()
 		service.clearTable(tableId)
 		call.respondRedirect(INDEX)
 	}

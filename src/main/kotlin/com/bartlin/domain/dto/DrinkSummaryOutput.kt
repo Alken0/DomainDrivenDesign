@@ -1,11 +1,14 @@
 package com.bartlin.domain.dto
 
 import com.bartlin.domain.entities.Drink
+import com.bartlin.domain.vo.Id
+import com.bartlin.domain.vo.Name
+import com.bartlin.domain.vo.Price
 
 data class DrinkSummaryOutput(
-	val id: Int,
-	val name: String,
-	val price: Int,
+	val id: Id,
+	val name: Name,
+	val price: Price,
 	val description: String = "",
 ) {
 	constructor(drink: Drink) : this(

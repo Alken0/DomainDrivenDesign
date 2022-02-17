@@ -1,6 +1,9 @@
 package com.bartlin.infrastructure.db.tables
 
 import com.bartlin.domain.entities.Drink
+import com.bartlin.domain.vo.Id
+import com.bartlin.domain.vo.Name
+import com.bartlin.domain.vo.Price
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 
@@ -14,8 +17,8 @@ object DrinkTable : Table() {
 }
 
 fun ResultRow.toDrink() = Drink(
-	id = this[DrinkTable.id],
-	name = this[DrinkTable.name],
-	price = this[DrinkTable.price],
+	id = Id(this[DrinkTable.id]),
+	name = Name(this[DrinkTable.name]),
+	price = Price(this[DrinkTable.price]),
 	description = this[DrinkTable.description]
 )

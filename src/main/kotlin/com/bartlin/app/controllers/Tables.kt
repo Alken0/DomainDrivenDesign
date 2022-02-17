@@ -25,9 +25,9 @@ fun Route.tables(service: TableService) {
 					tbody {
 						for (item in service.findAll()) {
 							tr {
-								th { scope = ThScope.row; +item.name }
+								th { scope = ThScope.row; +item.name.toString() }
 								td {
-									a(href = BILL.replace("{id}", "${item.id}")) {
+									a(href = BILL.replace("{id}", item.id.toString())) {
 										button(classes = "btn btn-secondary") {
 											+"Show Bill"
 										}

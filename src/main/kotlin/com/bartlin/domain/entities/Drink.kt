@@ -1,15 +1,12 @@
 package com.bartlin.domain.entities
 
+import com.bartlin.domain.vo.Id
+import com.bartlin.domain.vo.Name
+import com.bartlin.domain.vo.Price
 
 data class Drink(
-	val id: Int,
-	val name: String,
-	val price: Int,
-	val description: String = "",
-) {
-	init {
-		require(id >= 0) { "id is negativ" }
-		require(name.isNotBlank()) { "name is blank" }
-		require(price >= 0) { "price is negative" }
-	}
-}
+	val id: Id,
+	val name: Name,
+	val price: Price,
+	val description: String,
+)

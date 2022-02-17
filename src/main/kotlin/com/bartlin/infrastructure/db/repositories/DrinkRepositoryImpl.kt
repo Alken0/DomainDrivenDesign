@@ -2,6 +2,7 @@ package com.bartlin.infrastructure.db.repositories
 
 import com.bartlin.domain.entities.Drink
 import com.bartlin.domain.repositories.DrinkRepository
+import com.bartlin.domain.vo.Id
 import com.bartlin.infrastructure.db.tables.DrinkTable
 import com.bartlin.infrastructure.db.tables.toDrink
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -15,8 +16,8 @@ class DrinkRepositoryImpl : DrinkRepository {
 	override fun create(input: Drink) {
 		transaction {
 			DrinkTable.insert {
-				it[this.name] = input.name
-				it[this.price] = input.price
+				it[this.name] = input.name.toString()
+				it[this.price] = input.price.toCents()
 				it[this.description] = input.description
 			}
 		}
@@ -29,17 +30,17 @@ class DrinkRepositoryImpl : DrinkRepository {
 		}
 	}
 	
-	override fun findById(id: Int): Drink {
+	override fun findById(id: Id): Drink {
 		return transaction {
-			DrinkTable.select { DrinkTable.id eq id }.first().toDrink()
+			DrinkTable.select { DrinkTable.id eq id.toInt() }.first().toDrink()
 		}
 	}
 	
 	override fun update(input: Drink) {
 		transaction {
-			DrinkTable.update ({ DrinkTable.id eq input.id }) {
-				it[name] = input.name
-				it[price] = input.price
+			DrinkTable.update ({ DrinkTable.id eq input.id.toInt() }) {
+				it[name] = input.name.toString()
+				it[price] = input.price.toCents()
 				it[description] = input.description
 			}
 		}

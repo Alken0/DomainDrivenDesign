@@ -6,6 +6,7 @@ import com.bartlin.domain.dto.CreateOrderInput
 import com.bartlin.domain.services.DrinkService
 import com.bartlin.domain.services.OrderService
 import com.bartlin.domain.services.TableService
+import com.bartlin.domain.vo.toId
 import io.ktor.application.*
 import io.ktor.html.*
 import io.ktor.http.*
@@ -30,13 +31,13 @@ fun Route.createOrder(tables: TableService, drinks: DrinkService, orders: OrderS
 								for (table in tables.findAll()) {
 									option {
 										value = "${table.id}"
-										+table.name
+										+table.name.toString()
 									}
 								}
 							}
 						}
 					}
-
+					
 					div("row") {
 						label("form-label") {
 							+"Drink"
@@ -45,13 +46,13 @@ fun Route.createOrder(tables: TableService, drinks: DrinkService, orders: OrderS
 								for (drink in drinks.findAll()) {
 									option {
 										value = "${drink.id}"
-										+drink.name
+										+drink.name.toString()
 									}
 								}
 							}
 						}
 					}
-
+					
 					div("row mx-auto") {
 						button(classes = "btn btn-primary") {
 							type = ButtonType.submit
@@ -62,7 +63,7 @@ fun Route.createOrder(tables: TableService, drinks: DrinkService, orders: OrderS
 			}
 		}
 	}
-
+	
 	post {
 		val data = call.receiveParameters().toCreateOrder()
 		orders.create(data)
@@ -72,8 +73,8 @@ fun Route.createOrder(tables: TableService, drinks: DrinkService, orders: OrderS
 
 private fun Parameters.toCreateOrder(): CreateOrderInput {
 	return CreateOrderInput(
-		tableId = this["table"]!!.toInt(),
-		drinkId = this["drink"]!!.toInt(),
+		tableId = this["table"]!!.toId(),
+		drinkId = this["drink"]!!.toId(),
 	)
 }
 

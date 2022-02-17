@@ -28,12 +28,12 @@ fun Route.getMenu(service: DrinkService) {
 					tbody {
 						for (item in service.findAll()) {
 							tr {
-								th { scope = ThScope.row; +"${item.id}" }
-								td { +item.name }
-								td { +"${item.price / 100.0}€" }
+								th { scope = ThScope.row; +item.id.toString() }
+								td { +item.name.toString() }
+								td { +item.price.toEuro() }
 								td { +item.description }
 								td {
-									a(href = UPDATE_DRINK.replace("{id}", "${item.id}")) {
+									a(href = UPDATE_DRINK.replace("{id}", item.id.toString())) {
 										button(classes = "btn btn-secondary") {
 											+"edit"
 										}

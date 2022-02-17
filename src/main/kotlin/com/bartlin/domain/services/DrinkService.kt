@@ -5,10 +5,11 @@ import com.bartlin.domain.dto.DrinkSummaryOutput
 import com.bartlin.domain.dto.UpdateDrinkInput
 import com.bartlin.domain.entities.Drink
 import com.bartlin.domain.repositories.DrinkRepository
+import com.bartlin.domain.vo.Id
 
 class DrinkService(private val drinks: DrinkRepository) {
 	fun create(input: CreateDrinkInput) {
-		val data = Drink(id = 0, name = input.name, price = input.price, description = input.description)
+		val data = Drink(id = Id(0), name = input.name, price = input.price, description = input.description)
 		drinks.create(data)
 	}
 	
@@ -22,7 +23,7 @@ class DrinkService(private val drinks: DrinkRepository) {
 		drinks.update(updated)
 	}
 	
-	fun findById(id: Int): DrinkSummaryOutput {
+	fun findById(id: Id): DrinkSummaryOutput {
 		val drink = drinks.findById(id) ?: throw Exception("drink not found")
 		return DrinkSummaryOutput(drink)
 	}

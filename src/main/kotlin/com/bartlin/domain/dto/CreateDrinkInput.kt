@@ -1,13 +1,10 @@
 package com.bartlin.domain.dto
 
+import com.bartlin.domain.vo.Name
+import com.bartlin.domain.vo.Price
 
 data class CreateDrinkInput(
-	val name: String,
-	val price: Int,
-	val description: String = "",
-) {
-	init {
-		require(name.isNotBlank()) { "name is blank" }
-		require(price >= 0) { "price is negative" }
-	}
-}
+	val name: Name,
+	val price: Price,
+	val description: String,
+)

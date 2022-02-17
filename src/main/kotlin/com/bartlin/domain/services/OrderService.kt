@@ -5,6 +5,7 @@ import com.bartlin.domain.dto.DrinkSummaryOutput
 import com.bartlin.domain.repositories.DrinkRepository
 import com.bartlin.domain.repositories.OrderRepository
 import com.bartlin.domain.repositories.TableRepository
+import com.bartlin.domain.vo.Id
 
 class OrderService(
 	private val drinks: DrinkRepository,
@@ -18,12 +19,12 @@ class OrderService(
 		orders.create(table, drink)
 	}
 
-	fun findDrinksByTable(id: Int): List<DrinkSummaryOutput> {
+	fun findDrinksByTable(id: Id): List<DrinkSummaryOutput> {
 		val table = tables.findById(id) ?: throw Exception("table not found")
 		return orders.findDrinksByTable(table).map { DrinkSummaryOutput(it) }
 	}
 
-	fun clearTable(id: Int) {
+	fun clearTable(id: Id) {
 		val table = tables.findById(id) ?: throw Exception("table not found")
 		orders.deleteByTable(table)
 	}

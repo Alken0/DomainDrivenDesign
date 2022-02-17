@@ -4,6 +4,8 @@ import com.bartlin.app.CREATE_DRINK
 import com.bartlin.app.templates.BaseTemplate
 import com.bartlin.domain.dto.CreateDrinkInput
 import com.bartlin.domain.services.DrinkService
+import com.bartlin.domain.vo.toName
+import com.bartlin.domain.vo.toPrice
 import io.ktor.application.*
 import io.ktor.html.*
 import io.ktor.http.*
@@ -26,14 +28,16 @@ fun Route.createDrink(service: DrinkService) {
 							textInput(name = "name", classes = "form-control") { required = true }
 						}
 					}
-
+					
 					div("row") {
 						label("form-label") {
 							+"Price (in cents)"
-							numberInput(name = "price", classes = "form-control") { required = true }
+							numberInput(name = "price", classes = "form-control") {
+								required = true
+							}
 						}
 					}
-
+					
 					div("row") {
 						label("form-label") {
 							+"Description"
@@ -42,7 +46,7 @@ fun Route.createDrink(service: DrinkService) {
 							}
 						}
 					}
-
+					
 					div("row mx-auto") {
 						button(classes = "btn btn-primary") {
 							type = ButtonType.submit
@@ -53,7 +57,7 @@ fun Route.createDrink(service: DrinkService) {
 			}
 		}
 	}
-
+	
 	post {
 		val data = call.receiveParameters().toCreateDrinkInput()
 		service.create(data)
@@ -63,8 +67,8 @@ fun Route.createDrink(service: DrinkService) {
 
 private fun Parameters.toCreateDrinkInput(): CreateDrinkInput {
 	return CreateDrinkInput(
-		name = this["name"]!!,
-		price = this["price"]!!.toInt(),
+		name = this["name"]!!.toName(),
+		price = this["price"]!!.toPrice(),
 		description = this["description"]!!
 	)
 }

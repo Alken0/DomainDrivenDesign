@@ -4,6 +4,10 @@ import com.bartlin.app.MENU
 import com.bartlin.app.templates.BaseTemplate
 import com.bartlin.domain.dto.UpdateDrinkInput
 import com.bartlin.domain.services.DrinkService
+import com.bartlin.domain.vo.Id
+import com.bartlin.domain.vo.toId
+import com.bartlin.domain.vo.toName
+import com.bartlin.domain.vo.toPrice
 import io.ktor.application.*
 import io.ktor.html.*
 import io.ktor.http.*
@@ -14,7 +18,7 @@ import kotlinx.html.*
 
 fun Route.updateDrink(service: DrinkService) {
 	get {
-		val id = call.parameters["id"]!!.toInt()
+		val id = call.parameters["id"]!!.toId()
 		val original = service.findById(id)
 		call.respondHtmlTemplate(BaseTemplate()) {
 			header {
@@ -26,20 +30,20 @@ fun Route.updateDrink(service: DrinkService) {
 						label("form-label") {
 							+"Name"
 							textInput(name = "name", classes = "form-control") {
-								placeholder = original.name
+								placeholder = original.name.toString()
 							}
 						}
 					}
-
+					
 					div("row") {
 						label("form-label") {
 							+"Price (in cents)"
 							numberInput(name = "price", classes = "form-control") {
-								placeholder = "${original.price} cents"
+								placeholder = original.price.toEuro()
 							}
 						}
 					}
-
+					
 					div("row") {
 						label("form-label") {
 							+"Description"
@@ -49,7 +53,7 @@ fun Route.updateDrink(service: DrinkService) {
 							}
 						}
 					}
-
+					
 					div("row mx-auto") {
 						button(classes = "btn btn-primary") {
 							type = ButtonType.submit
@@ -60,20 +64,20 @@ fun Route.updateDrink(service: DrinkService) {
 			}
 		}
 	}
-
+	
 	post {
-		val id = call.parameters["id"]!!.toInt()
+		val id = call.parameters["id"]!!.toId()
 		val data = call.receiveParameters().toUpdateDrink(id)
 		service.update(data)
 		call.respondRedirect(MENU)
 	}
 }
 
-private fun Parameters.toUpdateDrink(id: Int): UpdateDrinkInput {
+private fun Parameters.toUpdateDrink(id: Id): UpdateDrinkInput {
 	return UpdateDrinkInput(
 		id = id,
-		name = this["name"]?.ifBlank { null },
-		price = this["price"]?.ifBlank { null }?.toInt(),
+		name = this["name"]?.ifBlank { null }?.toName(),
+		price = this["price"]?.ifBlank { null }?.toPrice(),
 		description = this["description"]?.ifBlank { null }
 	)
 }

@@ -1,11 +1,8 @@
 package com.bartlin.domain.dto
 
+import com.bartlin.domain.vo.Id
+
 data class CreateOrderInput(
-	val tableId: Int,
-	val drinkId: Int,
-) {
-	init {
-		require(tableId >= 0) { "tableId is negative" }
-		require(drinkId >= 0) { "drinkId is negative" }
-	}
-}
+	val tableId: Id,
+	val drinkId: Id,
+)

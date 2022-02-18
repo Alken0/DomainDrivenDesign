@@ -15,8 +15,8 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object DatabaseFactory {
 	fun init() {
-		Database.connect(hikari())
-		
+		Database.connect(inMemory())
+
 		transaction {
 			addLogger(StdOutSqlLogger)
 			create(TableTable)
@@ -56,7 +56,7 @@ object DatabaseFactory {
 		}
 	}
 
-	private fun hikari(): HikariDataSource {
+	private fun inMemory(): HikariDataSource {
 		val config = HikariConfig()
 		config.driverClassName = "org.h2.Driver"
 		config.jdbcUrl = "jdbc:h2:mem:test"

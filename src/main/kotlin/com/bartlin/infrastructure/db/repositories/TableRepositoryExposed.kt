@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class TableRepositoryImpl : TableRepository {
+class TableRepositoryExposed : TableRepository {
 	override fun findAll(): List<Table> {
 		return transaction {
 			TableTable.selectAll().sortedBy { TableTable.id }.toList()
@@ -18,8 +18,12 @@ class TableRepositoryImpl : TableRepository {
 	}
 
 	override fun findById(id: Id): Table? {
-		return transaction {
-			TableTable.select { TableTable.id eq id.toInt() }.first()?.toTable()
+		return try {
+			transaction {
+				TableTable.select { TableTable.id eq id.toInt() }.first()?.toTable()
+			}
+		} catch (e: NoSuchElementException) {
+			null
 		}
 	}
 }

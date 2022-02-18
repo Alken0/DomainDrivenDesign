@@ -4,9 +4,9 @@ import com.bartlin.domain.services.DrinkService
 import com.bartlin.domain.services.OrderService
 import com.bartlin.domain.services.TableService
 import com.bartlin.infrastructure.db.DatabaseFactory
-import com.bartlin.infrastructure.db.repositories.DrinkRepositoryImpl
-import com.bartlin.infrastructure.db.repositories.OrderRepositoryImpl
-import com.bartlin.infrastructure.db.repositories.TableRepositoryImpl
+import com.bartlin.infrastructure.db.repositories.DrinkRepositoryExposed
+import com.bartlin.infrastructure.db.repositories.OrderRepositoryExposed
+import com.bartlin.infrastructure.db.repositories.TableRepositoryExposed
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.server.engine.*
@@ -16,9 +16,9 @@ import org.slf4j.event.Level
 fun main() {
 	DatabaseFactory.init()
 
-	val drinkRepo = DrinkRepositoryImpl()
-	val tableRepo = TableRepositoryImpl()
-	val orderRepo = OrderRepositoryImpl()
+	val drinkRepo = DrinkRepositoryExposed()
+	val tableRepo = TableRepositoryExposed()
+	val orderRepo = OrderRepositoryExposed()
 
 	val drinkService = DrinkService(drinkRepo)
 	val tableService = TableService(tableRepo)

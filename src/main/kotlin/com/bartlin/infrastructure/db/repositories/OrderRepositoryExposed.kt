@@ -12,7 +12,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class OrderRepositoryImpl : OrderRepository {
+class OrderRepositoryExposed : OrderRepository {
 	override fun create(table: Table, drink: Drink) {
 		transaction {
 			OrderTable.insert {

@@ -17,29 +17,29 @@ import kotlin.test.assertEquals
  * Tests have to be run in order and in one run!
  */
 internal class TestDatabaseTest : DatabaseTest(arrayOf(DrinkTable)) {
-	@Test
-	fun createElements() {
-		transaction {
-			DrinkTable.insert {
-				it[this.name] = "name"
-				it[this.price] = 123
-				it[this.description] = "description"
-			}
-		}
-		val result = transaction {
-			DrinkTable.selectAll().sortedBy { DrinkTable.name }.toList()
-				.map { it.toDrink() }
-		}
-		assertEquals(result, listOf(Drink(Id(1), Name("name"), Price(123), "description")))
+    @Test
+    fun createElements() {
+        transaction {
+            DrinkTable.insert {
+                it[this.name] = "name"
+                it[this.price] = 123
+                it[this.description] = "description"
+            }
+        }
+        val result = transaction {
+            DrinkTable.selectAll().sortedBy { DrinkTable.name }.toList()
+                .map { it.toDrink() }
+        }
+        assertEquals(result, listOf(Drink(Id(1), Name("name"), Price(123), "description")))
 
-	}
+    }
 
-	@Test
-	fun expectDatabaseToBeEmpty() {
-		val result = transaction {
-			DrinkTable.selectAll().sortedBy { DrinkTable.name }.toList()
-				.map { it.toDrink() }
-		}
-		assertEquals(result, listOf())
-	}
+    @Test
+    fun expectDatabaseToBeEmpty() {
+        val result = transaction {
+            DrinkTable.selectAll().sortedBy { DrinkTable.name }.toList()
+                .map { it.toDrink() }
+        }
+        assertEquals(result, listOf())
+    }
 }

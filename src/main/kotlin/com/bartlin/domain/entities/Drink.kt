@@ -5,8 +5,8 @@ import com.bartlin.domain.vo.Name
 import com.bartlin.domain.vo.Price
 
 data class Drink(
-	val id: Id,
-	val name: Name,
-	val price: Price,
-	val description: String,
+    val id: Id,
+    val name: Name,
+    val price: Price,
+    val description: String,
 )

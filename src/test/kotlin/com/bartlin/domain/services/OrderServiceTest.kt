@@ -19,101 +19,101 @@ import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
 internal class OrderServiceTest {
-	private val drinks = mockk<DrinkRepository>()
-	private val tables = mockk<TableRepository>()
-	private val orders = mockk<OrderRepository>()
-	private val service = OrderService(drinks, tables, orders)
+    private val drinks = mockk<DrinkRepository>()
+    private val tables = mockk<TableRepository>()
+    private val orders = mockk<OrderRepository>()
+    private val service = OrderService(drinks, tables, orders)
 
-	@Test
-	fun createWorks() {
-		val drink = Drink(Id(12), Name("name"), Price(12), "")
-		val table = Table(Id(124))
-		val input = CreateOrderInput(tableId = table.id, drinkId = drink.id)
+    @Test
+    fun createWorks() {
+        val drink = Drink(Id(12), Name("name"), Price(12), "")
+        val table = Table(Id(124))
+        val input = CreateOrderInput(tableId = table.id, drinkId = drink.id)
 
-		every { drinks.findById(drink.id) } returns drink
-		every { tables.findById(table.id) } returns table
-		every { orders.create(table, drink) } returns Unit
+        every { drinks.findById(drink.id) } returns drink
+        every { tables.findById(table.id) } returns table
+        every { orders.create(table, drink) } returns Unit
 
-		service.create(input)
+        service.create(input)
 
-		verify(exactly = 1) { drinks.findById(drink.id) }
-		verify(exactly = 1) { tables.findById(table.id) }
-		verify(exactly = 1) { orders.create(table, drink) }
-	}
+        verify(exactly = 1) { drinks.findById(drink.id) }
+        verify(exactly = 1) { tables.findById(table.id) }
+        verify(exactly = 1) { orders.create(table, drink) }
+    }
 
-	@Test
-	fun createThrowsExceptionIfTableNotFound() {
-		val drink = Drink(Id(12), Name("name"), Price(12), "")
-		val table = Table(Id(124))
-		val input = CreateOrderInput(tableId = table.id, drinkId = drink.id)
+    @Test
+    fun createThrowsExceptionIfTableNotFound() {
+        val drink = Drink(Id(12), Name("name"), Price(12), "")
+        val table = Table(Id(124))
+        val input = CreateOrderInput(tableId = table.id, drinkId = drink.id)
 
-		every { tables.findById(table.id) } returns null
+        every { tables.findById(table.id) } returns null
 
-		assertThrows<NotFoundException> { service.create(input) }
-		verify(exactly = 1) { tables.findById(table.id) }
-	}
+        assertThrows<NotFoundException> { service.create(input) }
+        verify(exactly = 1) { tables.findById(table.id) }
+    }
 
-	@Test
-	fun createThrowsExceptionIfDrinkNotFound() {
-		val drink = Drink(Id(12), Name("name"), Price(12), "")
-		val table = Table(Id(124))
-		val input = CreateOrderInput(tableId = table.id, drinkId = drink.id)
+    @Test
+    fun createThrowsExceptionIfDrinkNotFound() {
+        val drink = Drink(Id(12), Name("name"), Price(12), "")
+        val table = Table(Id(124))
+        val input = CreateOrderInput(tableId = table.id, drinkId = drink.id)
 
-		every { tables.findById(table.id) } returns table
-		every { drinks.findById(drink.id) } returns null
+        every { tables.findById(table.id) } returns table
+        every { drinks.findById(drink.id) } returns null
 
-		assertThrows<NotFoundException> { service.create(input) }
-		verify(exactly = 1) { drinks.findById(drink.id) }
-		verify(exactly = 1) { tables.findById(table.id) }
-	}
+        assertThrows<NotFoundException> { service.create(input) }
+        verify(exactly = 1) { drinks.findById(drink.id) }
+        verify(exactly = 1) { tables.findById(table.id) }
+    }
 
-	@Test
-	fun getBillForTableWorks() {
-		val table = Table(Id(12))
-		val expectedDrinks = listOf(Drink(Id(1), Name("name"), Price(12), ""))
-		val expectedBill = BillOutput(expectedDrinks)
+    @Test
+    fun getBillForTableWorks() {
+        val table = Table(Id(12))
+        val expectedDrinks = listOf(Drink(Id(1), Name("name"), Price(12), ""))
+        val expectedBill = BillOutput(expectedDrinks)
 
-		every { tables.findById(table.id) } returns table
-		every { orders.findDrinksByTable(table) } returns expectedDrinks
+        every { tables.findById(table.id) } returns table
+        every { orders.findDrinksByTable(table) } returns expectedDrinks
 
-		val result = service.getBillForTable(table.id)
+        val result = service.getBillForTable(table.id)
 
-		assertEquals(expectedBill, result)
-		verify(exactly = 1) { tables.findById(table.id) }
-		verify(exactly = 1) { orders.findDrinksByTable(table) }
-	}
+        assertEquals(expectedBill, result)
+        verify(exactly = 1) { tables.findById(table.id) }
+        verify(exactly = 1) { orders.findDrinksByTable(table) }
+    }
 
-	@Test
-	fun getBillForTableThrowsExceptionIfTableDoesNotExist() {
-		val table = Table(Id(12))
+    @Test
+    fun getBillForTableThrowsExceptionIfTableDoesNotExist() {
+        val table = Table(Id(12))
 
-		every { tables.findById(table.id) } returns null
+        every { tables.findById(table.id) } returns null
 
-		assertThrows<NotFoundException> { service.getBillForTable(table.id) }
-		verify(exactly = 1) { tables.findById(table.id) }
-	}
+        assertThrows<NotFoundException> { service.getBillForTable(table.id) }
+        verify(exactly = 1) { tables.findById(table.id) }
+    }
 
-	@Test
-	fun clearTableWorks() {
-		val table = Table(Id(12))
+    @Test
+    fun clearTableWorks() {
+        val table = Table(Id(12))
 
-		every { tables.findById(table.id) } returns table
-		every { orders.deleteByTable(table) } returns Unit
+        every { tables.findById(table.id) } returns table
+        every { orders.deleteByTable(table) } returns Unit
 
-		service.clearTable(table.id)
+        service.clearTable(table.id)
 
-		verify(exactly = 1) { tables.findById(table.id) }
-		verify(exactly = 1) { orders.deleteByTable(table) }
-	}
+        verify(exactly = 1) { tables.findById(table.id) }
+        verify(exactly = 1) { orders.deleteByTable(table) }
+    }
 
-	@Test
-	fun clearTableThrowsExceptionIfTableNotFound() {
-		val table = Table(Id(12))
+    @Test
+    fun clearTableThrowsExceptionIfTableNotFound() {
+        val table = Table(Id(12))
 
-		every { tables.findById(table.id) } returns null
+        every { tables.findById(table.id) } returns null
 
-		assertThrows<NotFoundException> { service.clearTable(table.id) }
+        assertThrows<NotFoundException> { service.clearTable(table.id) }
 
-		verify(exactly = 1) { tables.findById(table.id) }
-	}
+        verify(exactly = 1) { tables.findById(table.id) }
+    }
 }

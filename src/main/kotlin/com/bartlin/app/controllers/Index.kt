@@ -7,16 +7,16 @@ import io.ktor.routing.*
 import kotlinx.html.div
 
 fun Route.index() {
-	get {
-		call.respondHtmlTemplate(BaseTemplate()) {
-			header {
-				+"BARTLIN a Hipster Cocktailbar"
-			}
-			content {
-				div {
-					+"Please use the header for navigation!"
-				}
-			}
-		}
-	}
+    get {
+        call.respondHtmlTemplate(BaseTemplate()) {
+            header {
+                +"BARTLIN a Hipster Cocktailbar"
+            }
+            content {
+                div {
+                    +"Please use the header for navigation!"
+                }
+            }
+        }
+    }
 }

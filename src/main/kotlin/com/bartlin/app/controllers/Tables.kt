@@ -9,35 +9,35 @@ import io.ktor.routing.*
 import kotlinx.html.*
 
 fun Route.tables(service: TableService) {
-	get {
-		call.respondHtmlTemplate(BaseTemplate()) {
-			header {
-				+"Bill"
-			}
-			content {
-				table("table") {
-					thead {
-						tr {
-							th { scope = ThScope.col; +"Name" }
-							th { scope = ThScope.col;+"" }
-						}
-					}
-					tbody {
-						for (item in service.findAll()) {
-							tr {
-								th { scope = ThScope.row; +item.name.toString() }
-								td {
-									a(href = BILL.replace("{id}", item.id.toString())) {
-										button(classes = "btn btn-secondary") {
-											+"Show Bill"
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+    get {
+        call.respondHtmlTemplate(BaseTemplate()) {
+            header {
+                +"Bill"
+            }
+            content {
+                table("table") {
+                    thead {
+                        tr {
+                            th { scope = ThScope.col; +"Name" }
+                            th { scope = ThScope.col;+"" }
+                        }
+                    }
+                    tbody {
+                        for (item in service.findAll()) {
+                            tr {
+                                th { scope = ThScope.row; +item.name.toString() }
+                                td {
+                                    a(href = BILL.replace("{id}", item.id.toString())) {
+                                        button(classes = "btn btn-secondary") {
+                                            +"Show Bill"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

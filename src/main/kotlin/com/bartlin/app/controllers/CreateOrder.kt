@@ -16,66 +16,66 @@ import io.ktor.routing.*
 import kotlinx.html.*
 
 fun Route.createOrder(tables: TableService, drinks: DrinkService, orders: OrderService) {
-	get {
-		call.respondHtmlTemplate(BaseTemplate()) {
-			header {
-				+"Create a new Order"
-			}
-			content {
-				form(method = FormMethod.post) {
-					div("row") {
-						label("form-label") {
-							+"Table"
-							select("form-select") {
-								name = "table"
-								for (table in tables.findAll()) {
-									option {
-										value = "${table.id}"
-										+table.name.toString()
-									}
-								}
-							}
-						}
-					}
-					
-					div("row") {
-						label("form-label") {
-							+"Drink"
-							select("form-select") {
-								name = "drink"
-								for (drink in drinks.findAll()) {
-									option {
-										value = "${drink.id}"
-										+drink.name.toString()
-									}
-								}
-							}
-						}
-					}
-					
-					div("row mx-auto") {
-						button(classes = "btn btn-primary") {
-							type = ButtonType.submit
-							+"Submit"
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	post {
-		val data = call.receiveParameters().toCreateOrder()
-		orders.create(data)
-		call.respondRedirect(CREATE_ORDER)
-	}
+    get {
+        call.respondHtmlTemplate(BaseTemplate()) {
+            header {
+                +"Create a new Order"
+            }
+            content {
+                form(method = FormMethod.post) {
+                    div("row") {
+                        label("form-label") {
+                            +"Table"
+                            select("form-select") {
+                                name = "table"
+                                for (table in tables.findAll()) {
+                                    option {
+                                        value = "${table.id}"
+                                        +table.name.toString()
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    div("row") {
+                        label("form-label") {
+                            +"Drink"
+                            select("form-select") {
+                                name = "drink"
+                                for (drink in drinks.findAll()) {
+                                    option {
+                                        value = "${drink.id}"
+                                        +drink.name.toString()
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    div("row mx-auto") {
+                        button(classes = "btn btn-primary") {
+                            type = ButtonType.submit
+                            +"Submit"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        val data = call.receiveParameters().toCreateOrder()
+        orders.create(data)
+        call.respondRedirect(CREATE_ORDER)
+    }
 }
 
 private fun Parameters.toCreateOrder(): CreateOrderInput {
-	return CreateOrderInput(
-		tableId = this["table"]!!.toId(),
-		drinkId = this["drink"]!!.toId(),
-	)
+    return CreateOrderInput(
+        tableId = this["table"]!!.toId(),
+        drinkId = this["drink"]!!.toId(),
+    )
 }
 
 

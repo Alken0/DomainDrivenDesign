@@ -12,19 +12,19 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class TableServiceTest {
-	private val tables = mockk<TableRepository>()
-	private val service = TableService(tables)
+    private val tables = mockk<TableRepository>()
+    private val service = TableService(tables)
 
-	@Test
-	fun findAllWorks() {
-		val output = listOf(Table(Id(22)))
-		val expected = listOf(TableSummaryOutput(Id(22), Name("Table 22")))
+    @Test
+    fun findAllWorks() {
+        val output = listOf(Table(Id(22)))
+        val expected = listOf(TableSummaryOutput(Id(22), Name("Table 22")))
 
-		every { tables.findAll() } returns output
+        every { tables.findAll() } returns output
 
-		val result = service.findAll()
+        val result = service.findAll()
 
-		assertEquals(expected, result)
-		verify(exactly = 1) { tables.findAll() }
-	}
+        assertEquals(expected, result)
+        verify(exactly = 1) { tables.findAll() }
+    }
 }

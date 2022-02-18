@@ -14,56 +14,56 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 
 object DatabaseFactory {
-	fun init() {
-		Database.connect(inMemory())
+    fun init() {
+        Database.connect(inMemory())
 
-		transaction {
-			addLogger(StdOutSqlLogger)
-			create(TableTable)
-			create(DrinkTable)
-			create(OrderTable)
-			dummyTables()
-			dummyDrinks()
-		}
-	}
+        transaction {
+            addLogger(StdOutSqlLogger)
+            create(TableTable)
+            create(DrinkTable)
+            create(OrderTable)
+            dummyTables()
+            dummyDrinks()
+        }
+    }
 
-	private fun dummyDrinks() {
-		transaction {
-			DrinkTable.insert {
-				it[this.name] = "Rum Honey Sour"
-				it[this.price] = 900
-				it[this.description] = "Brugal Especial, Falernum, lime juice, egg white, honey, rosemary"
-			}
-			DrinkTable.insert {
-				it[this.name] = "43 Sour"
-				it[this.price] = 850
-				it[this.description] = "Licor 43, lemon juice, orange juice"
-			}
-			DrinkTable.insert {
-				it[this.name] = "Wake Up"
-				it[this.price] = 600
-				it[this.description] =
-					"almond syrup, lemon juice, sugar syrup, lime juice, orange juice, passion fruit juice"
-			}
-		}
-	}
+    private fun dummyDrinks() {
+        transaction {
+            DrinkTable.insert {
+                it[this.name] = "Rum Honey Sour"
+                it[this.price] = 900
+                it[this.description] = "Brugal Especial, Falernum, lime juice, egg white, honey, rosemary"
+            }
+            DrinkTable.insert {
+                it[this.name] = "43 Sour"
+                it[this.price] = 850
+                it[this.description] = "Licor 43, lemon juice, orange juice"
+            }
+            DrinkTable.insert {
+                it[this.name] = "Wake Up"
+                it[this.price] = 600
+                it[this.description] =
+                    "almond syrup, lemon juice, sugar syrup, lime juice, orange juice, passion fruit juice"
+            }
+        }
+    }
 
-	private fun dummyTables() {
-		transaction {
-			for (i in 0..9) {
-				TableTable.insert { }
-			}
-		}
-	}
+    private fun dummyTables() {
+        transaction {
+            for (i in 0..9) {
+                TableTable.insert { }
+            }
+        }
+    }
 
-	private fun inMemory(): HikariDataSource {
-		val config = HikariConfig()
-		config.driverClassName = "org.h2.Driver"
-		config.jdbcUrl = "jdbc:h2:mem:test"
-		config.maximumPoolSize = 3
-		config.isAutoCommit = false
-		config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"
-		config.validate()
-		return HikariDataSource(config)
-	}
+    private fun inMemory(): HikariDataSource {
+        val config = HikariConfig()
+        config.driverClassName = "org.h2.Driver"
+        config.jdbcUrl = "jdbc:h2:mem:test"
+        config.maximumPoolSize = 3
+        config.isAutoCommit = false
+        config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"
+        config.validate()
+        return HikariDataSource(config)
+    }
 }

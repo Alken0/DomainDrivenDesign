@@ -5,15 +5,15 @@ import org.junit.jupiter.api.assertThrows
 
 
 internal class PriceTest {
-	@Test
-	fun hasToBePositive() {
-		assertThrows<IllegalArgumentException> {
-			Price(-1)
-		}
-	}
+    @Test
+    fun hasToBePositive() {
+        assertThrows<IllegalArgumentException> {
+            Price(-1)
+        }
+    }
 
-	@Test
-	fun zeroIsAllowed() {
-		Price(0)
-	}
+    @Test
+    fun zeroIsAllowed() {
+        Price(0)
+    }
 }

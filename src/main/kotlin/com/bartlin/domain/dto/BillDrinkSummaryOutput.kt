@@ -5,8 +5,8 @@ import com.bartlin.domain.vo.Name
 import com.bartlin.domain.vo.Price
 
 data class BillDrinkSummaryOutput(
-	val name: Name,
-	val price: Price
+    val name: Name,
+    val price: Price
 ) {
-	constructor(input: Drink) : this(input.name, input.price)
+    constructor(input: Drink) : this(input.name, input.price)
 }

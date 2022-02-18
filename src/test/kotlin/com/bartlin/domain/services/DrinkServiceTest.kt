@@ -16,66 +16,66 @@ import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
 internal class DrinkServiceTest {
-	private val drinks = mockk<DrinkRepository>()
-	private val service = DrinkService(drinks)
+    private val drinks = mockk<DrinkRepository>()
+    private val service = DrinkService(drinks)
 
-	@Test
-	fun findByIdReturnsCorrectElement() {
-		val expected = Drink(Id(12), Name("name"), Price(12), "")
+    @Test
+    fun findByIdReturnsCorrectElement() {
+        val expected = Drink(Id(12), Name("name"), Price(12), "")
 
-		every { drinks.findById(expected.id) } returns expected
+        every { drinks.findById(expected.id) } returns expected
 
-		val result = service.findById(expected.id)
+        val result = service.findById(expected.id)
 
-		assertEquals(DrinkSummaryOutput(expected), result)
-		verify(exactly = 1) { drinks.findById(expected.id) }
-	}
+        assertEquals(DrinkSummaryOutput(expected), result)
+        verify(exactly = 1) { drinks.findById(expected.id) }
+    }
 
-	@Test
-	fun findByIdThrowsExceptionIfIdDoesNotExist() {
-		val expected = Drink(Id(12), Name("name"), Price(12), "")
+    @Test
+    fun findByIdThrowsExceptionIfIdDoesNotExist() {
+        val expected = Drink(Id(12), Name("name"), Price(12), "")
 
-		every { drinks.findById(expected.id) } returns null
+        every { drinks.findById(expected.id) } returns null
 
-		assertThrows<NotFoundException> { service.findById(expected.id) }
-		verify(exactly = 1) { drinks.findById(expected.id) }
-	}
+        assertThrows<NotFoundException> { service.findById(expected.id) }
+        verify(exactly = 1) { drinks.findById(expected.id) }
+    }
 
-	@Test
-	fun updateThrowsExceptionIfIdDoesNotExist() {
-		val expected = UpdateDrinkInput(Id(12), Name("name"), Price(12), "")
+    @Test
+    fun updateThrowsExceptionIfIdDoesNotExist() {
+        val expected = UpdateDrinkInput(Id(12), Name("name"), Price(12), "")
 
-		every { drinks.findById(expected.id) } returns null
+        every { drinks.findById(expected.id) } returns null
 
-		assertThrows<NotFoundException> { service.update(expected) }
-		verify(exactly = 1) { drinks.findById(expected.id) }
-	}
+        assertThrows<NotFoundException> { service.update(expected) }
+        verify(exactly = 1) { drinks.findById(expected.id) }
+    }
 
-	@Test
-	fun updatePartially() {
-		val input = UpdateDrinkInput(Id(22), Name("new"))
-		val original = Drink(Id(22), Name("new"), Price(12), "")
-		val updated = Drink(Id(22), Name("new"), Price(12), description = "")
+    @Test
+    fun updatePartially() {
+        val input = UpdateDrinkInput(Id(22), Name("new"))
+        val original = Drink(Id(22), Name("new"), Price(12), "")
+        val updated = Drink(Id(22), Name("new"), Price(12), description = "")
 
-		every { drinks.findById(input.id) } returns original
-		every { drinks.update(updated) } returns Unit
+        every { drinks.findById(input.id) } returns original
+        every { drinks.update(updated) } returns Unit
 
-		service.update(input)
+        service.update(input)
 
-		verify(exactly = 1) { drinks.findById(input.id) }
-		verify(exactly = 1) { drinks.update(updated) }
-	}
+        verify(exactly = 1) { drinks.findById(input.id) }
+        verify(exactly = 1) { drinks.update(updated) }
+    }
 
-	@Test
-	fun findAll() {
-		val output = listOf(Drink(Id(22), Name("name"), Price(12), ""))
-		val expected = listOf(DrinkSummaryOutput(Id(22), Name("name"), Price(12), ""))
+    @Test
+    fun findAll() {
+        val output = listOf(Drink(Id(22), Name("name"), Price(12), ""))
+        val expected = listOf(DrinkSummaryOutput(Id(22), Name("name"), Price(12), ""))
 
-		every { drinks.findAll() } returns output
+        every { drinks.findAll() } returns output
 
-		val result = service.findAll()
+        val result = service.findAll()
 
-		assertEquals(expected, result)
-		verify(exactly = 1) { drinks.findAll() }
-	}
+        assertEquals(expected, result)
+        verify(exactly = 1) { drinks.findAll() }
+    }
 }

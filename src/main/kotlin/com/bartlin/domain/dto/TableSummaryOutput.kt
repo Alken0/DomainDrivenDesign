@@ -5,11 +5,11 @@ import com.bartlin.domain.vo.Id
 import com.bartlin.domain.vo.Name
 
 data class TableSummaryOutput(
-	val id: Id,
-	val name: Name
+    val id: Id,
+    val name: Name
 ) {
-	constructor(table: Table) : this(
-		id = table.id,
-		name = Name("Table ${table.id}")
-	)
+    constructor(table: Table) : this(
+        id = table.id,
+        name = Name("Table ${table.id}")
+    )
 }

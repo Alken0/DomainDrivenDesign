@@ -16,13 +16,13 @@ const val BILL = "/tables/{id}/bill"
 const val TABLES = "/tables"
 
 fun Application.routes(drinkService: DrinkService, orderService: OrderService, tableService: TableService) {
-	routing {
-		route(INDEX) { index() }
-		route(CREATE_ORDER) { createOrder(tableService, drinkService, orderService) }
-		route(CREATE_DRINK) { createDrink(drinkService) }
-		route(UPDATE_DRINK) { updateDrink(drinkService) }
-		route(MENU) { getMenu(drinkService) }
-		route(BILL) { bill(orderService) }
-		route(TABLES) { tables(tableService) }
-	}
+    routing {
+        route(INDEX) { index() }
+        route(CREATE_ORDER) { createOrder(tableService, drinkService, orderService) }
+        route(CREATE_DRINK) { createDrink(drinkService) }
+        route(UPDATE_DRINK) { updateDrink(drinkService) }
+        route(MENU) { getMenu(drinkService) }
+        route(BILL) { bill(orderService) }
+        route(TABLES) { tables(tableService) }
+    }
 }

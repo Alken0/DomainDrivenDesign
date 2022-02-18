@@ -14,18 +14,18 @@ import io.ktor.server.netty.*
 import org.slf4j.event.Level
 
 fun main() {
-	DatabaseFactory.init()
+    DatabaseFactory.init()
 
-	val drinkRepo = DrinkRepositoryExposed()
-	val tableRepo = TableRepositoryExposed()
-	val orderRepo = OrderRepositoryExposed()
+    val drinkRepo = DrinkRepositoryExposed()
+    val tableRepo = TableRepositoryExposed()
+    val orderRepo = OrderRepositoryExposed()
 
-	val drinkService = DrinkService(drinkRepo)
-	val tableService = TableService(tableRepo)
-	val orderService = OrderService(drinkRepo, tableRepo, orderRepo)
+    val drinkService = DrinkService(drinkRepo)
+    val tableService = TableService(tableRepo)
+    val orderService = OrderService(drinkRepo, tableRepo, orderRepo)
 
-	embeddedServer(Netty, watchPaths = listOf(), port = 8080, host = "127.0.0.1") {
-		install(CallLogging) { level = Level.INFO }
-		routes(drinkService, orderService, tableService)
-	}.start(wait = true)
+    embeddedServer(Netty, watchPaths = listOf(), port = 8080, host = "127.0.0.1") {
+        install(CallLogging) { level = Level.INFO }
+        routes(drinkService, orderService, tableService)
+    }.start(wait = true)
 }

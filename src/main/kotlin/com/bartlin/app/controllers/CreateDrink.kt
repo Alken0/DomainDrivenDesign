@@ -15,61 +15,61 @@ import io.ktor.routing.*
 import kotlinx.html.*
 
 fun Route.createDrink(service: DrinkService) {
-	get {
-		call.respondHtmlTemplate(BaseTemplate()) {
-			header {
-				+"Create a new Drink"
-			}
-			content {
-				form(method = FormMethod.post) {
-					div("row") {
-						label("form-label") {
-							+"Name"
-							textInput(name = "name", classes = "form-control") { required = true }
-						}
-					}
-					
-					div("row") {
-						label("form-label") {
-							+"Price (in cents)"
-							numberInput(name = "price", classes = "form-control") {
-								required = true
-							}
-						}
-					}
-					
-					div("row") {
-						label("form-label") {
-							+"Description"
-							textArea(classes = "form-control") {
-								name = "description"
-							}
-						}
-					}
-					
-					div("row mx-auto") {
-						button(classes = "btn btn-primary") {
-							type = ButtonType.submit
-							+"Submit"
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	post {
-		val data = call.receiveParameters().toCreateDrinkInput()
-		service.create(data)
-		call.respondRedirect(CREATE_DRINK)
-	}
+    get {
+        call.respondHtmlTemplate(BaseTemplate()) {
+            header {
+                +"Create a new Drink"
+            }
+            content {
+                form(method = FormMethod.post) {
+                    div("row") {
+                        label("form-label") {
+                            +"Name"
+                            textInput(name = "name", classes = "form-control") { required = true }
+                        }
+                    }
+
+                    div("row") {
+                        label("form-label") {
+                            +"Price (in cents)"
+                            numberInput(name = "price", classes = "form-control") {
+                                required = true
+                            }
+                        }
+                    }
+
+                    div("row") {
+                        label("form-label") {
+                            +"Description"
+                            textArea(classes = "form-control") {
+                                name = "description"
+                            }
+                        }
+                    }
+
+                    div("row mx-auto") {
+                        button(classes = "btn btn-primary") {
+                            type = ButtonType.submit
+                            +"Submit"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        val data = call.receiveParameters().toCreateDrinkInput()
+        service.create(data)
+        call.respondRedirect(CREATE_DRINK)
+    }
 }
 
 private fun Parameters.toCreateDrinkInput(): CreateDrinkInput {
-	return CreateDrinkInput(
-		name = this["name"]!!.toName(),
-		price = this["price"]!!.toPrice(),
-		description = this["description"]!!
-	)
+    return CreateDrinkInput(
+        name = this["name"]!!.toName(),
+        price = this["price"]!!.toPrice(),
+        description = this["description"]!!
+    )
 }
 

@@ -10,36 +10,36 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 internal class TableRepositoryExposedTest : DatabaseTest(arrayOf(TableTable)) {
-	private val repository: TableRepository = TableRepositoryExposed()
+    private val repository: TableRepository = TableRepositoryExposed()
 
-	@Test
-	fun findAllWorks() {
-		transaction {
-			for (i in 0..9) {
-				TableTable.insert { }
-			}
-		}
+    @Test
+    fun findAllWorks() {
+        transaction {
+            for (i in 0..9) {
+                TableTable.insert { }
+            }
+        }
 
-		val result = repository.findAll()
+        val result = repository.findAll()
 
-		assertEquals(10, result.size)
-	}
+        assertEquals(10, result.size)
+    }
 
-	@Test
-	fun findByIdWorks() {
-		transaction {
-			TableTable.insert { }
-		}
+    @Test
+    fun findByIdWorks() {
+        transaction {
+            TableTable.insert { }
+        }
 
-		val result = repository.findById(Id(1))
+        val result = repository.findById(Id(1))
 
-		assertEquals(Table(Id(1)), result)
-	}
+        assertEquals(Table(Id(1)), result)
+    }
 
-	@Test
-	fun findByIdWorksReturnsNullIfNothingFound() {
-		val result = repository.findById(Id(1))
+    @Test
+    fun findByIdWorksReturnsNullIfNothingFound() {
+        val result = repository.findById(Id(1))
 
-		assertEquals(null, result)
-	}
+        assertEquals(null, result)
+    }
 }

@@ -13,25 +13,25 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class OrderRepositoryExposed : OrderRepository {
-	override fun create(table: Table, drink: Drink) {
-		transaction {
-			OrderTable.insert {
-				it[this.drink] = drink.id.toInt()
-				it[this.table] = table.id.toInt()
-			}
-		}
-	}
+    override fun create(table: Table, drink: Drink) {
+        transaction {
+            OrderTable.insert {
+                it[this.drink] = drink.id.toInt()
+                it[this.table] = table.id.toInt()
+            }
+        }
+    }
 
-	override fun findDrinksByTable(table: Table): List<Drink> {
-		return transaction {
-			DrinkTable.join(OrderTable, JoinType.LEFT, onColumn = DrinkTable.id, otherColumn = OrderTable.drink)
-				.select { OrderTable.table eq table.id.toInt() }.map { it.toDrink() }
-		}
-	}
+    override fun findDrinksByTable(table: Table): List<Drink> {
+        return transaction {
+            DrinkTable.join(OrderTable, JoinType.LEFT, onColumn = DrinkTable.id, otherColumn = OrderTable.drink)
+                .select { OrderTable.table eq table.id.toInt() }.map { it.toDrink() }
+        }
+    }
 
-	override fun deleteByTable(table: Table) {
-		transaction {
-			OrderTable.deleteWhere { OrderTable.table eq table.id.toInt() }
-		}
-	}
+    override fun deleteByTable(table: Table) {
+        transaction {
+            OrderTable.deleteWhere { OrderTable.table eq table.id.toInt() }
+        }
+    }
 }

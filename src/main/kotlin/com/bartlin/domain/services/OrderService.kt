@@ -6,6 +6,7 @@ import com.bartlin.domain.repositories.DrinkRepository
 import com.bartlin.domain.repositories.OrderRepository
 import com.bartlin.domain.repositories.TableRepository
 import com.bartlin.domain.vo.Id
+import io.ktor.features.*
 
 class OrderService(
 	private val drinks: DrinkRepository,
@@ -13,20 +14,20 @@ class OrderService(
 	private val orders: OrderRepository
 ) {
 	fun create(input: CreateOrderInput) {
-		val table = tables.findById(input.tableId) ?: throw Exception("table not found")
-		val drink = drinks.findById(input.drinkId) ?: throw Exception("drink not found")
+		val table = tables.findById(input.tableId) ?: throw NotFoundException("table not found")
+		val drink = drinks.findById(input.drinkId) ?: throw NotFoundException("drink not found")
 
 		orders.create(table, drink)
 	}
 
 	fun getBillForTable(id: Id): BillOutput {
-		val table = tables.findById(id) ?: throw Exception("table not found")
+		val table = tables.findById(id) ?: throw NotFoundException("table not found")
 		val drinks = orders.findDrinksByTable(table)
 		return BillOutput(drinks)
 	}
 
 	fun clearTable(id: Id) {
-		val table = tables.findById(id) ?: throw Exception("table not found")
+		val table = tables.findById(id) ?: throw NotFoundException("table not found")
 		orders.deleteByTable(table)
 	}
 }

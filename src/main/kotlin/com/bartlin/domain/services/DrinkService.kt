@@ -6,6 +6,7 @@ import com.bartlin.domain.dto.UpdateDrinkInput
 import com.bartlin.domain.entities.Drink
 import com.bartlin.domain.repositories.DrinkRepository
 import com.bartlin.domain.vo.Id
+import io.ktor.features.*
 
 class DrinkService(private val drinks: DrinkRepository) {
 	fun create(input: CreateDrinkInput) {
@@ -14,7 +15,7 @@ class DrinkService(private val drinks: DrinkRepository) {
 	}
 	
 	fun update(input: UpdateDrinkInput) {
-		val original = drinks.findById(input.id) ?: throw Exception("drink not found")
+		val original = drinks.findById(input.id) ?: throw NotFoundException("drink not found")
 		val updated = original.copy(
 			name = input.name ?: original.name,
 			price = input.price ?: original.price,
@@ -24,7 +25,7 @@ class DrinkService(private val drinks: DrinkRepository) {
 	}
 	
 	fun findById(id: Id): DrinkSummaryOutput {
-		val drink = drinks.findById(id) ?: throw Exception("drink not found")
+		val drink = drinks.findById(id) ?: throw NotFoundException("drink not found")
 		return DrinkSummaryOutput(drink)
 	}
 	

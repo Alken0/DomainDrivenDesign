@@ -2,12 +2,11 @@ package com.bartlin.app.controllers
 
 import com.bartlin.app.MENU
 import com.bartlin.app.templates.BaseTemplate
-import com.bartlin.domain.dto.UpdateDrinkInput
-import com.bartlin.domain.services.DrinkService
+import com.bartlin.domain.dto.UpdateTableInput
+import com.bartlin.domain.services.TableService
 import com.bartlin.domain.vo.Id
 import com.bartlin.domain.vo.toId
 import com.bartlin.domain.vo.toName
-import com.bartlin.domain.vo.toPrice
 import io.ktor.application.*
 import io.ktor.html.*
 import io.ktor.http.*
@@ -16,7 +15,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.html.*
 
-fun Route.updateDrink(service: DrinkService) {
+fun Route.updateTable(service: TableService) {
     get {
         val id = call.parameters["id"]!!.toId()
         val original = service.findById(id)
@@ -35,25 +34,6 @@ fun Route.updateDrink(service: DrinkService) {
                         }
                     }
 
-                    div("row") {
-                        label("form-label") {
-                            +"Price (in cents)"
-                            numberInput(name = "price", classes = "form-control") {
-                                value = "${original.price.toCents()}"
-                            }
-                        }
-                    }
-
-                    div("row") {
-                        label("form-label") {
-                            +"Description"
-                            textArea(classes = "form-control") {
-                                name = "description"
-                                +original.description
-                            }
-                        }
-                    }
-
                     div("row mx-auto") {
                         button(classes = "btn btn-primary") {
                             type = ButtonType.submit
@@ -67,18 +47,15 @@ fun Route.updateDrink(service: DrinkService) {
 
     post {
         val id = call.parameters["id"]!!.toId()
-        val data = call.receiveParameters().toUpdateDrink(id)
+        val data = call.receiveParameters().toUpdateTable(id)
         service.update(data)
         call.respondRedirect(MENU)
     }
 }
 
-private fun Parameters.toUpdateDrink(id: Id): UpdateDrinkInput {
-    return UpdateDrinkInput(
+private fun Parameters.toUpdateTable(id: Id): UpdateTableInput {
+    return UpdateTableInput(
         id = id,
-        name = this["name"]?.ifBlank { null }?.toName(),
-        price = this["price"]?.ifBlank { null }?.toPrice(),
-        description = this["description"]?.ifBlank { null }
+        name = this["name"]?.ifBlank { null }?.toName()
     )
 }
-

@@ -9,6 +9,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 
 class TableRepositoryExposed : TableRepository {
     override fun findAll(): List<Table> {
@@ -32,6 +33,14 @@ class TableRepositoryExposed : TableRepository {
         transaction {
             TableTable.insert {
                 it[this.name] = input.name.toString()
+            }
+        }
+    }
+
+    override fun update(input: Table) {
+        transaction {
+            TableTable.update({ TableTable.id eq input.id.toInt() }) {
+                it[name] = input.name.toString()
             }
         }
     }

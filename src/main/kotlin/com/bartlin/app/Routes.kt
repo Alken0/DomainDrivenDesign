@@ -15,6 +15,7 @@ const val CREATE_ORDER = "/orders/new"
 const val BILL = "/tables/{id}/bill"
 const val TABLES = "/tables"
 const val CREATE_TABLE = "/tables/new"
+const val UPDATE_TABLE = "/tables/{id}"
 
 fun Application.routes(drinkService: DrinkService, orderService: OrderService, tableService: TableService) {
     routing {
@@ -26,5 +27,6 @@ fun Application.routes(drinkService: DrinkService, orderService: OrderService, t
         route(BILL) { bill(orderService) }
         route(TABLES) { tables(tableService) }
         route(CREATE_TABLE) { createTable(tableService) }
+        route(UPDATE_TABLE) { updateTable(tableService) }
     }
 }

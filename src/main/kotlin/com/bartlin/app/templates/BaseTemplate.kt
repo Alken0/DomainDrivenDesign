@@ -39,7 +39,7 @@ class BaseTemplate : Template<HTML> {
                             a(href = CREATE_ORDER, classes = "nav-link") { +"Create Order" }
                         }
                         li("nav-item") {
-                            a(href = TABLES, classes = "nav-link") { +"Bill" }
+                            a(href = TABLES, classes = "nav-link") { +"Tables" }
                         }
                         li("nav-item") {
                             a(href = CREATE_TABLE, classes = "nav-link") { +"Create Table" }

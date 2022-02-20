@@ -36,10 +36,16 @@ class BaseTemplate : Template<HTML> {
                             a(href = TABLES, classes = "nav-link") { +"Tables" }
                         }
                         li("nav-item") {
+                            a(href = RESERVATIONS, classes = "nav-link") { +"Reservations" }
+                        }
+                        li("nav-item") {
                             a(href = CREATE_DRINK, classes = "nav-link") { +"Create Drink" }
                         }
                         li("nav-item") {
                             a(href = CREATE_TABLE, classes = "nav-link") { +"Create Table" }
+                        }
+                        li("nav-item") {
+                            a(href = CREATE_RESERVATION, classes = "nav-link") { +"Create Reservation" }
                         }
                     }
                 }

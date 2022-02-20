@@ -1,20 +1,25 @@
 package com.bartlin.app
 
 import com.bartlin.domain.entities.Drink
+import com.bartlin.domain.entities.Reservation
 import com.bartlin.domain.entities.Table
 import com.bartlin.domain.repositories.DrinkRepository
+import com.bartlin.domain.repositories.ReservationRepository
 import com.bartlin.domain.repositories.TableRepository
 import com.bartlin.domain.vo.Id
 import com.bartlin.domain.vo.Name
 import com.bartlin.domain.vo.Price
+import com.bartlin.domain.vo.Time
 
 class DummyDataInserter(
     private val drinks: DrinkRepository,
-    private val tables: TableRepository
+    private val tables: TableRepository,
+    private val reservations: ReservationRepository
 ) {
     fun insert() {
         insertDrinks()
         insertTables()
+        insertReservations()
     }
 
     private fun insertDrinks() {
@@ -55,5 +60,16 @@ class DummyDataInserter(
                 )
             )
         }
+    }
+
+    private fun insertReservations() {
+        reservations.create(
+            Reservation(
+                id = Id(0),
+                customer = Name("Customer Number One"),
+                time = Time.now(),
+                tableId = Id(1)
+            )
+        )
     }
 }

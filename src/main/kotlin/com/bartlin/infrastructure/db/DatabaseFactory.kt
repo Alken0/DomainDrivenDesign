@@ -2,6 +2,7 @@ package com.bartlin.infrastructure.db
 
 import com.bartlin.infrastructure.db.tables.DrinkTable
 import com.bartlin.infrastructure.db.tables.OrderTable
+import com.bartlin.infrastructure.db.tables.ReservationTable
 import com.bartlin.infrastructure.db.tables.TableTable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -24,6 +25,7 @@ object DatabaseFactory {
             create(TableTable)
             create(DrinkTable)
             create(OrderTable)
+            create(ReservationTable)
         }
     }
 

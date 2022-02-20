@@ -14,11 +14,13 @@ import io.ktor.server.netty.*
 import org.slf4j.event.Level
 
 fun main() {
-    DatabaseFactory.init()
+    DatabaseFactory.inMemory()
 
     val drinkRepo = DrinkRepositoryExposed()
     val tableRepo = TableRepositoryExposed()
     val orderRepo = OrderRepositoryExposed()
+
+    DummyDataInserter(drinkRepo, tableRepo).insert()
 
     val drinkService = DrinkService(drinkRepo)
     val tableService = TableService(tableRepo)

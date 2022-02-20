@@ -51,7 +51,9 @@ object DatabaseFactory {
     private fun dummyTables() {
         transaction {
             for (i in 0..9) {
-                TableTable.insert { }
+                TableTable.insert {
+                    it[this.name] = "Table $i"
+                }
             }
         }
     }

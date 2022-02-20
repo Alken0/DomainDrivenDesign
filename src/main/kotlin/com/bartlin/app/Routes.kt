@@ -8,12 +8,13 @@ import io.ktor.application.*
 import io.ktor.routing.*
 
 const val INDEX = "/"
-const val CREATE_DRINK = "/drinks"
+const val CREATE_DRINK = "/drinks/new"
 const val UPDATE_DRINK = "/drinks/{id}"
 const val MENU = "/menu"
-const val CREATE_ORDER = "/orders"
+const val CREATE_ORDER = "/orders/new"
 const val BILL = "/tables/{id}/bill"
 const val TABLES = "/tables"
+const val CREATE_TABLE = "/tables/new"
 
 fun Application.routes(drinkService: DrinkService, orderService: OrderService, tableService: TableService) {
     routing {
@@ -24,5 +25,6 @@ fun Application.routes(drinkService: DrinkService, orderService: OrderService, t
         route(MENU) { getMenu(drinkService) }
         route(BILL) { bill(orderService) }
         route(TABLES) { tables(tableService) }
+        route(CREATE_TABLE) { createTable(tableService) }
     }
 }

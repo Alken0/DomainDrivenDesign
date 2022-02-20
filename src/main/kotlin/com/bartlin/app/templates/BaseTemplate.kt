@@ -41,6 +41,9 @@ class BaseTemplate : Template<HTML> {
                         li("nav-item") {
                             a(href = TABLES, classes = "nav-link") { +"Bill" }
                         }
+                        li("nav-item") {
+                            a(href = CREATE_TABLE, classes = "nav-link") { +"Create Table" }
+                        }
                     }
                 }
 

@@ -17,7 +17,7 @@ internal class TableServiceTest {
 
     @Test
     fun findAllWorks() {
-        val output = listOf(Table(Id(22)))
+        val output = listOf(Table(Id(22), Name("Table 22")))
         val expected = listOf(TableSummaryOutput(Id(22), Name("Table 22")))
 
         every { tables.findAll() } returns output

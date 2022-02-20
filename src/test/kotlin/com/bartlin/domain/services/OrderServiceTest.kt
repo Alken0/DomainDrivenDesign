@@ -27,7 +27,7 @@ internal class OrderServiceTest {
     @Test
     fun createWorks() {
         val drink = Drink(Id(12), Name("name"), Price(12), "")
-        val table = Table(Id(124))
+        val table = Table(Id(124), Name("Table 124"))
         val input = CreateOrderInput(tableId = table.id, drinkId = drink.id)
 
         every { drinks.findById(drink.id) } returns drink
@@ -44,7 +44,7 @@ internal class OrderServiceTest {
     @Test
     fun createThrowsExceptionIfTableNotFound() {
         val drink = Drink(Id(12), Name("name"), Price(12), "")
-        val table = Table(Id(124))
+        val table = Table(Id(124), Name("Table 124"))
         val input = CreateOrderInput(tableId = table.id, drinkId = drink.id)
 
         every { tables.findById(table.id) } returns null
@@ -56,7 +56,7 @@ internal class OrderServiceTest {
     @Test
     fun createThrowsExceptionIfDrinkNotFound() {
         val drink = Drink(Id(12), Name("name"), Price(12), "")
-        val table = Table(Id(124))
+        val table = Table(Id(124), Name("Table 124"))
         val input = CreateOrderInput(tableId = table.id, drinkId = drink.id)
 
         every { tables.findById(table.id) } returns table
@@ -69,7 +69,7 @@ internal class OrderServiceTest {
 
     @Test
     fun getBillForTableWorks() {
-        val table = Table(Id(12))
+        val table = Table(Id(12), Name("Table 124"))
         val expectedDrinks = listOf(Drink(Id(1), Name("name"), Price(12), ""))
         val expectedBill = BillOutput(expectedDrinks)
 
@@ -85,7 +85,7 @@ internal class OrderServiceTest {
 
     @Test
     fun getBillForTableThrowsExceptionIfTableDoesNotExist() {
-        val table = Table(Id(12))
+        val table = Table(Id(12), Name("Table 124"))
 
         every { tables.findById(table.id) } returns null
 
@@ -95,7 +95,7 @@ internal class OrderServiceTest {
 
     @Test
     fun clearTableWorks() {
-        val table = Table(Id(12))
+        val table = Table(Id(12), Name("Table 12"))
 
         every { tables.findById(table.id) } returns table
         every { orders.deleteByTable(table) } returns Unit
@@ -108,7 +108,7 @@ internal class OrderServiceTest {
 
     @Test
     fun clearTableThrowsExceptionIfTableNotFound() {
-        val table = Table(Id(12))
+        val table = Table(Id(12), Name("Table 22"))
 
         every { tables.findById(table.id) } returns null
 

@@ -3,6 +3,7 @@ package com.bartlin.infrastructure.db.repositories
 import com.bartlin.domain.entities.Table
 import com.bartlin.domain.repositories.TableRepository
 import com.bartlin.domain.vo.Id
+import com.bartlin.domain.vo.Name
 import com.bartlin.infrastructure.db.tables.TableTable
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -16,7 +17,9 @@ internal class TableRepositoryExposedTest : DatabaseTest(arrayOf(TableTable)) {
     fun findAllWorks() {
         transaction {
             for (i in 0..9) {
-                TableTable.insert { }
+                TableTable.insert {
+                    it[this.name] = "Table $i"
+                }
             }
         }
 
@@ -28,12 +31,14 @@ internal class TableRepositoryExposedTest : DatabaseTest(arrayOf(TableTable)) {
     @Test
     fun findByIdWorks() {
         transaction {
-            TableTable.insert { }
+            TableTable.insert {
+                it[this.name] = "Table 1"
+            }
         }
 
         val result = repository.findById(Id(1))
 
-        assertEquals(Table(Id(1)), result)
+        assertEquals(Table(Id(1), Name("Table 1")), result)
     }
 
     @Test

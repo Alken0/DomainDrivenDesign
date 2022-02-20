@@ -10,6 +10,6 @@ data class TableSummaryOutput(
 ) {
     constructor(table: Table) : this(
         id = table.id,
-        name = Name("Table ${table.id}")
+        name = table.name
     )
 }

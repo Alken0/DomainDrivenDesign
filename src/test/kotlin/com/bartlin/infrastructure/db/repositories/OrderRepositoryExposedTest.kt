@@ -22,7 +22,7 @@ internal class OrderRepositoryExposedTest : DatabaseTest(arrayOf(DrinkTable, Tab
     @Test
     fun createWorks() {
         val drink = Drink(Id(1), Name("name"), Price(123), "")
-        val table = Table(Id(1))
+        val table = Table(Id(1), Name("Table 1"))
 
         transaction {
             DrinkTable.insert {
@@ -30,7 +30,9 @@ internal class OrderRepositoryExposedTest : DatabaseTest(arrayOf(DrinkTable, Tab
                 it[this.price] = drink.price.toCents()
                 it[this.description] = drink.description
             }
-            TableTable.insert { }
+            TableTable.insert {
+                it[this.name] = "Table 1"
+            }
         }
 
         repository.create(table, drink)
@@ -45,7 +47,7 @@ internal class OrderRepositoryExposedTest : DatabaseTest(arrayOf(DrinkTable, Tab
     @Test
     fun findDrinksByTableWorks() {
         val drink = Drink(Id(1), Name("name"), Price(123), "")
-        val table = Table(Id(1))
+        val table = Table(Id(1), Name("Table 1"))
 
         transaction {
             DrinkTable.insert {
@@ -53,7 +55,9 @@ internal class OrderRepositoryExposedTest : DatabaseTest(arrayOf(DrinkTable, Tab
                 it[this.price] = drink.price.toCents()
                 it[this.description] = drink.description
             }
-            TableTable.insert { }
+            TableTable.insert {
+                it[this.name] = "Table 1"
+            }
             OrderTable.insert {
                 it[this.table] = table.id.toInt()
                 it[this.drink] = drink.id.toInt()
@@ -68,7 +72,7 @@ internal class OrderRepositoryExposedTest : DatabaseTest(arrayOf(DrinkTable, Tab
     @Test
     fun deleteByTableWorks() {
         val drink = Drink(Id(1), Name("name"), Price(123), "")
-        val table = Table(Id(1))
+        val table = Table(Id(1), Name("Table 1"))
 
         transaction {
             DrinkTable.insert {
@@ -76,7 +80,9 @@ internal class OrderRepositoryExposedTest : DatabaseTest(arrayOf(DrinkTable, Tab
                 it[this.price] = drink.price.toCents()
                 it[this.description] = drink.description
             }
-            TableTable.insert { }
+            TableTable.insert {
+                it[this.name] = "Table 1"
+            }
             OrderTable.insert {
                 it[this.table] = table.id.toInt()
                 it[this.drink] = drink.id.toInt()

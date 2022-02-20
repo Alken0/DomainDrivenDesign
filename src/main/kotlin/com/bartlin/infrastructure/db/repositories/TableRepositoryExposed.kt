@@ -5,6 +5,7 @@ import com.bartlin.domain.repositories.TableRepository
 import com.bartlin.domain.vo.Id
 import com.bartlin.infrastructure.db.tables.TableTable
 import com.bartlin.infrastructure.db.tables.toTable
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -24,6 +25,14 @@ class TableRepositoryExposed : TableRepository {
             }
         } catch (e: NoSuchElementException) {
             null
+        }
+    }
+
+    override fun create(input: Table) {
+        transaction {
+            TableTable.insert {
+                it[this.name] = input.name.toString()
+            }
         }
     }
 }

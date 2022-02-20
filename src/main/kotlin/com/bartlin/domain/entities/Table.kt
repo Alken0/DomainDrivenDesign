@@ -1,7 +1,9 @@
 package com.bartlin.domain.entities
 
 import com.bartlin.domain.vo.Id
+import com.bartlin.domain.vo.Name
 
-class Table(
-    val id: Id
+data class Table(
+    val id: Id,
+    val name: Name
 )

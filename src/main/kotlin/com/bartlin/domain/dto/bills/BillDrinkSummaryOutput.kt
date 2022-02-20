@@ -1,4 +1,4 @@
-package com.bartlin.domain.dto
+package com.bartlin.domain.dto.bills
 
 import com.bartlin.domain.entities.Drink
 import com.bartlin.domain.vo.Name

@@ -1,4 +1,4 @@
-package com.bartlin.app.controllers
+package com.bartlin.app.controllers.tables
 
 import com.bartlin.app.BILL
 import com.bartlin.app.UPDATE_TABLE

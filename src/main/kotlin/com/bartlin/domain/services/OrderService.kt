@@ -1,7 +1,7 @@
 package com.bartlin.domain.services
 
-import com.bartlin.domain.dto.BillOutput
-import com.bartlin.domain.dto.CreateOrderInput
+import com.bartlin.domain.dto.bills.BillOutput
+import com.bartlin.domain.dto.orders.CreateOrderInput
 import com.bartlin.domain.repositories.DrinkRepository
 import com.bartlin.domain.repositories.OrderRepository
 import com.bartlin.domain.repositories.TableRepository

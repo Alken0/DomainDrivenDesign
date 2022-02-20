@@ -1,7 +1,7 @@
 package com.bartlin.domain.services
 
-import com.bartlin.domain.dto.TableSummaryOutput
-import com.bartlin.domain.dto.UpdateTableInput
+import com.bartlin.domain.dto.tables.TableSummaryOutput
+import com.bartlin.domain.dto.tables.UpdateTableInput
 import com.bartlin.domain.entities.Table
 import com.bartlin.domain.repositories.TableRepository
 import com.bartlin.domain.vo.Id

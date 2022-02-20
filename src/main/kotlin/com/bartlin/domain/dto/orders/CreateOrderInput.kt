@@ -1,4 +1,4 @@
-package com.bartlin.domain.dto
+package com.bartlin.domain.dto.orders
 
 import com.bartlin.domain.vo.Id
 

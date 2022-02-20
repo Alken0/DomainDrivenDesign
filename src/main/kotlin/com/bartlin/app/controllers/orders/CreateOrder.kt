@@ -1,8 +1,8 @@
-package com.bartlin.app.controllers
+package com.bartlin.app.controllers.orders
 
 import com.bartlin.app.CREATE_ORDER
 import com.bartlin.app.templates.BaseTemplate
-import com.bartlin.domain.dto.CreateOrderInput
+import com.bartlin.domain.dto.orders.CreateOrderInput
 import com.bartlin.domain.services.DrinkService
 import com.bartlin.domain.services.OrderService
 import com.bartlin.domain.services.TableService

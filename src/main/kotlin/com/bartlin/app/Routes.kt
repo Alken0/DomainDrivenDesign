@@ -1,6 +1,14 @@
 package com.bartlin.app
 
-import com.bartlin.app.controllers.*
+import com.bartlin.app.controllers.bill
+import com.bartlin.app.controllers.drinks.createDrink
+import com.bartlin.app.controllers.drinks.updateDrink
+import com.bartlin.app.controllers.getMenu
+import com.bartlin.app.controllers.index
+import com.bartlin.app.controllers.orders.createOrder
+import com.bartlin.app.controllers.tables.createTable
+import com.bartlin.app.controllers.tables.tables
+import com.bartlin.app.controllers.tables.updateTable
 import com.bartlin.domain.services.DrinkService
 import com.bartlin.domain.services.OrderService
 import com.bartlin.domain.services.TableService

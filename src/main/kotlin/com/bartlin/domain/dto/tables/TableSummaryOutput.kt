@@ -1,4 +1,4 @@
-package com.bartlin.domain.dto
+package com.bartlin.domain.dto.tables
 
 import com.bartlin.domain.entities.Table
 import com.bartlin.domain.vo.Id

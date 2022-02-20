@@ -1,10 +1,10 @@
-package com.bartlin.domain.dto
+package com.bartlin.domain.dto.bills
 
 import com.bartlin.domain.entities.Drink
 import com.bartlin.domain.vo.Id
 import com.bartlin.domain.vo.Name
 import com.bartlin.domain.vo.Price
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 internal class BillOutputTest {
@@ -20,7 +20,7 @@ internal class BillOutputTest {
 
     @Test
     fun totalIsCorrect() {
-        assertEquals(Price(32), bill.total())
+        Assertions.assertEquals(Price(32), bill.total())
     }
 
     @Test
@@ -32,6 +32,6 @@ internal class BillOutputTest {
             BillDrinkSummaryOutput(name = Name("name3"), price = Price(7)),
             BillDrinkSummaryOutput(name = Name("name4"), price = Price(8)),
         )
-        assertEquals(expected, bill.orders())
+        Assertions.assertEquals(expected, bill.orders())
     }
 }

@@ -1,9 +1,11 @@
-package com.bartlin.app.controllers
+package com.bartlin.app.controllers.tables
 
-import com.bartlin.app.CREATE_TABLE
+import com.bartlin.app.MENU
 import com.bartlin.app.templates.BaseTemplate
-import com.bartlin.domain.dto.CreateTableInput
+import com.bartlin.domain.dto.tables.UpdateTableInput
 import com.bartlin.domain.services.TableService
+import com.bartlin.domain.vo.Id
+import com.bartlin.domain.vo.toId
 import com.bartlin.domain.vo.toName
 import io.ktor.application.*
 import io.ktor.html.*
@@ -13,18 +15,22 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.html.*
 
-fun Route.createTable(service: TableService) {
+fun Route.updateTable(service: TableService) {
     get {
+        val id = call.parameters["id"]!!.toId()
+        val original = service.findById(id)
         call.respondHtmlTemplate(BaseTemplate()) {
             header {
-                +"Create a new Table"
+                +"Update Drink Data"
             }
             content {
                 form(method = FormMethod.post) {
                     div("row") {
                         label("form-label") {
                             +"Name"
-                            textInput(name = "name", classes = "form-control") { required = true }
+                            textInput(name = "name", classes = "form-control") {
+                                value = original.name.toString()
+                            }
                         }
                     }
 
@@ -40,15 +46,16 @@ fun Route.createTable(service: TableService) {
     }
 
     post {
-        val data = call.receiveParameters().toCreateTableInput()
-        service.create(data)
-        call.respondRedirect(CREATE_TABLE)
+        val id = call.parameters["id"]!!.toId()
+        val data = call.receiveParameters().toUpdateTable(id)
+        service.update(data)
+        call.respondRedirect(MENU)
     }
 }
 
-private fun Parameters.toCreateTableInput(): CreateTableInput {
-    return CreateTableInput(
-        name = this["name"]!!.toName(),
+private fun Parameters.toUpdateTable(id: Id): UpdateTableInput {
+    return UpdateTableInput(
+        id = id,
+        name = this["name"]?.ifBlank { null }?.toName()
     )
 }
-

@@ -21,25 +21,22 @@ class BaseTemplate : Template<HTML> {
 
         body {
             nav("navbar navbar-dark bg-primary navbar-expand-lg px-4 mb-4") {
-                div("navbar-brand") {
+                a(href = "/", classes = "navbar-brand") {
                     +"BARTLIN"
                 }
                 div("container-fluid") {
                     ul("navbar-nav") {
                         li("nav-item") {
-                            a(href = INDEX, classes = "nav-link") { +"Home" }
-                        }
-                        li("nav-item") {
                             a(href = MENU, classes = "nav-link") { +"Menu" }
-                        }
-                        li("nav-item") {
-                            a(href = CREATE_DRINK, classes = "nav-link") { +"Create Drink" }
                         }
                         li("nav-item") {
                             a(href = CREATE_ORDER, classes = "nav-link") { +"Create Order" }
                         }
                         li("nav-item") {
                             a(href = TABLES, classes = "nav-link") { +"Tables" }
+                        }
+                        li("nav-item") {
+                            a(href = CREATE_DRINK, classes = "nav-link") { +"Create Drink" }
                         }
                         li("nav-item") {
                             a(href = CREATE_TABLE, classes = "nav-link") { +"Create Table" }

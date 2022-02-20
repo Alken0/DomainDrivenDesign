@@ -1,7 +1,7 @@
 package com.bartlin.domain.services
 
-import com.bartlin.domain.dto.DrinkSummaryOutput
-import com.bartlin.domain.dto.UpdateDrinkInput
+import com.bartlin.domain.dto.drinks.DrinkSummaryOutput
+import com.bartlin.domain.dto.drinks.UpdateDrinkInput
 import com.bartlin.domain.entities.Drink
 import com.bartlin.domain.repositories.DrinkRepository
 import com.bartlin.domain.vo.Id

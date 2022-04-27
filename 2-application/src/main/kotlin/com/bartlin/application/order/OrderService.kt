@@ -2,6 +2,7 @@ package com.bartlin.application.order
 
 import com.bartlin.domain.drink.DrinkRepository
 import com.bartlin.domain.order.OrderRepository
+import com.bartlin.domain.price.HappyHourPriceStrategy
 import com.bartlin.domain.table.TableRepository
 import com.bartlin.domain.types.Id
 
@@ -15,6 +16,12 @@ class OrderService(
         val drink = drinks.findById(input.drinkId) ?: throw NoSuchElementException("drink not found")
 
         orders.create(table, drink)
+    }
+
+    fun getHappyHourBillForTable(id: Id): BillOutput {
+        val table = tables.findById(id) ?: throw NoSuchElementException("table not found")
+        val drinks = orders.findDrinksByTable(table)
+        return BillOutput(drinks, HappyHourPriceStrategy())
     }
 
     fun getBillForTable(id: Id): BillOutput {

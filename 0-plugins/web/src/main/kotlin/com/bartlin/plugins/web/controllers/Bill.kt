@@ -15,7 +15,10 @@ import kotlinx.html.*
 fun Route.bill(service: OrderService) {
     get {
         val tableId = call.parameters.getId().toId()
-        val bill = service.getBillForTable(tableId).toMapper()
+        val happyHour = call.request.queryParameters["happy-hour"] ?: ""
+        val bill = if (happyHour == "true")
+            service.getHappyHourBillForTable(tableId).toMapper() else
+            service.getBillForTable(tableId).toMapper();
 
         call.respondHtmlTemplate(BaseTemplate()) {
             header {
@@ -38,6 +41,10 @@ fun Route.bill(service: OrderService) {
                         }
                     }
                     tfoot {
+                        tr {
+                            th { +"Discount" }
+                            th { +"${bill.discountInPercent()}%" }
+                        }
                         tr {
                             th { +"Total" }
                             th { +"${bill.totalInEuros()}€" }

@@ -26,6 +26,7 @@ fun Route.tables(service: TableService) {
                             th { scope = ThScope.col; +"Name" }
                             th { scope = ThScope.col; +"" }
                             th { scope = ThScope.col; +"" }
+                            th { scope = ThScope.col; +"" }
                         }
                     }
                     tbody {
@@ -43,6 +44,13 @@ fun Route.tables(service: TableService) {
                                     a(href = BILL.replace("{id}", table.id)) {
                                         button(classes = "btn btn-secondary") {
                                             +"Show Bill"
+                                        }
+                                    }
+                                }
+                                td {
+                                    a(href = BILL.replace("{id}", table.id) + "?happy-hour=true") {
+                                        button(classes = "btn btn-secondary") {
+                                            +"Show Happy Hour Bill"
                                         }
                                     }
                                 }

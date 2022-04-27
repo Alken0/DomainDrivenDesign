@@ -1,6 +1,7 @@
 package com.barltin.adapters.order
 
 import com.bartlin.application.order.BillOutput
+import kotlin.math.roundToInt
 
 data class BillOutputMapper(
     private val original: BillOutput
@@ -11,6 +12,10 @@ data class BillOutputMapper(
 
     fun orders(): List<BillDrinkSummaryOutputMapper> {
         return original.orders().map { it.toMapper() }
+    }
+
+    fun discountInPercent(): Int {
+        return (original.discount() * 100).roundToInt()
     }
 }
 

@@ -26,7 +26,8 @@ fun main() {
     val orderService = OrderService(drinkRepo, tableRepo, orderRepo)
     val reservationService = ReservationService(reservationRepo)
 
-    embeddedServer(Netty, watchPaths = listOf(), port = 8080, host = "127.0.0.1") {
+    val host: String = System.getenv("BARTLIN_HOST") ?: "127.0.0.1"
+    embeddedServer(Netty, watchPaths = listOf(), port = 8080, host = host) {
         install(CallLogging) { level = Level.INFO }
         routes(drinkService, orderService, tableService, reservationService)
     }.start(wait = true)
